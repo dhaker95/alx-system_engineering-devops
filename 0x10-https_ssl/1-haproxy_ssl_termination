@@ -33,21 +33,21 @@ defaults
 	errorfile 503 /etc/haproxy/errors/503.http
 	errorfile 504 /etc/haproxy/errors/504.http
 
-# start of parameters for beta-scribbles.tech
-frontend betascribbles.tech-http-frontend
+# start of parameters for dhakerachour.tech
+frontend dhakerachour.tech-http-frontend
 	bind	 *:80
 	http-request set-header X-Forwarded-Proto http
-	default_backend	 beta-scribbles.tech-backend
+	default_backend	 dhakerachour.tech-backend
 
 
-frontend  beta-scribbles.tech-https-frontend
-	bind *:443 ssl crt /etc/ssl/beta-scribbles.tech.pem
+frontend  dhakerachour.tech-https-frontend
+	bind *:443 ssl crt /etc/ssl/dhakerachour.tech.pem
 	http-request set-header X-Forwarded-Proto https
-        default_backend beta-scribbles.tech-backend
+        default_backend dhakerachour.tech-backend
 
 
-backend beta-scribbles.tech-backend
+backend dhakerachour.tech-backend
         balance roundrobin
-        server 914-web-01 34.138.32.248:80 check
-        server 914-web-02 3.226.74.205:80 check
+        server 169388-web-01 52.3.220.168:80 check
+        server 169388-web-02 54.174.105.12:80 check
 # end of parameters
