@@ -1,14 +1,7 @@
-# Increse the request's limit
-
-# Increse ulimit value
-exec { 'fix-config-nginx':
-  onlyif  => 'test -e /etc/default/nginx',
-  command => 'sed -i "5s/[0-9]\+/$( ulimit -n )/" /etc/default/nginx',
-  path    => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+# fixes increase limit
+exec { 'sed -i "s/ULIMIT=\"-n 15\"/ULIMIT=\"-n 5000\"/g" /etc/default/nginx':
+  path => '/usr/bin:/usr/sbin:/bin',
 }
-
-# Restart nginex service
-exec { 'nginx-restart':
-  command => 'nginx restart',
-  path    => '/etc/init.d/'
+-> exec {'restart service':
+  command => '/usr/sbin/service nginx restart',
 }
