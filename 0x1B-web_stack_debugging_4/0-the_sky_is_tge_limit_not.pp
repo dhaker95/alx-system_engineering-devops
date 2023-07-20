@@ -1,8 +1,9 @@
-#0-the_sky_is_the_limit_not.pp set open file limit higher
-exec { 'set limit to 2000':
-  path    => '/bin',
-  command => "sed -i 's/100/2000/' /etc/default/nginx"
+# fix the limit nginx.
+exec { 'myfix':
+command => 'sed -i "/ULIMIT=/c\ULIMIT=\"-n 2000\"" /etc/default/nginx',
+path    => '/bin',
 }
-exec { 'reboot nginx':
-  command => '/usr/sbin/service nginx restart'
+service { 'nginx':
+ensure    => running,
+subscribe => Exec['myfix'],
 }
