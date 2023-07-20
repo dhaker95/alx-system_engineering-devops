@@ -1,9 +1,10 @@
-mit file
-exec { 'Correct hard':
-  command  => 'sudo sed -i \'s/nofile 5/nofile 30000/\' /etc/security/limits.conf',
-  provider => shell,
+# fixes increase limit
+exec { 'sed -i "s/holberton hard nofile 5/holberton hard nofile 5000/" /etc/security/limits.conf':
+  path => '/usr/bin:/usr/sbin:/bin',
 }
-exec { 'Correct soft':
-  command  => 'sudo sed -i \'s/nofile 4/nofile 10000/\' /etc/security/limits.conf',
-  provider => shell,
+exec { 'sed -i "s/holberton soft nofile 4/holberton soft nofile 4000/" /etc/security/limits.conf':
+  path => '/usr/bin:/usr/sbin:/bin',
+}
+-> exec {'refresh conf':
+  command => '/sbin/sysctl -p',
 }
