@@ -1,9 +1,6 @@
-# fix the limit nginx.
-exec { 'myfix':
-command => 'sed -i "/ULIMIT=/c\ULIMIT=\"-n 2000\"" /etc/default/nginx',
-path    => '/bin',
-}
-service { 'nginx':
-ensure    => running,
-subscribe => Exec['myfix'],
+# fixes a file
+exec {'sets file limite for nginx':
+  command => 'sed -i "s/15/2000/g" /etc/default/nginx',
+  path    => '/bin/:/sbin/:/usr/bin/:/usr/sbin/',
+  onlyif  => 'test -f /etc/default/nginx'
 }
